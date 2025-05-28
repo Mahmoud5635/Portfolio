@@ -83,65 +83,93 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 1.5rem;
-            position: relative; /* For parallax pseudo-element */
-            overflow: hidden; /* Contain pseudo-element */
+            padding: 1rem; /* Reduced overall padding for #home to allow hero-content to be more prominent */
+            position: relative; 
+            overflow: hidden; 
             border-bottom: 6px solid var(--border-strong);
-            /* Parallax background is applied here for JS control */
             background-image: var(--parallax-bg-image);
-            background-color: #101010; /* Darker base for parallax */
-            background-attachment: scroll; /* Important for JS parallax */
+            background-color: #101010; 
+            background-attachment: scroll; 
             background-size: auto;
         }
-        #home .hero-content { /* Ensure content is above pseudo-element */
+        #home .hero-content { 
             position: relative;
-            z-index: 1; /* Keep content above any potential ::before overlay */
-            background-color: var(--bg-hero-overlay); /* Semi-transparent overlay for text */
-            padding: 2rem;
+            z-index: 1; 
+            background-color: var(--bg-hero-overlay); 
+            padding: 2rem; /* Base padding for smaller screens */
             border: 4px solid var(--accent2);
             box-shadow: 0 0 0 8px var(--accent1), 8px 8px 0 8px var(--bg-main);
+            width: 90%; /* Take up most of the width on small screens */
+            max-width: 650px; /* Max width for smaller desktops/tablets */
         }
         #home h1 {
-            font-size: 2.5rem; /* Adjusted for pixel font */
+            font-size: 2.2rem; /* Base H1 size */
             line-height: 1.2;
             margin-bottom: 1rem;
             color: var(--text-primary);
-            /* 8-bit style text effect */
             text-shadow: 
-                3px 3px 0 var(--accent2),  /* Magenta shadow */
-                -3px -3px 0 var(--accent1); /* Cyan highlight/shadow */
+                3px 3px 0 var(--accent2), 
+                -3px -3px 0 var(--accent1); 
         }
          #home h1 .name-highlight {
-            color: var(--accent3); /* Yellow for name */
-            display: inline-block; /* Needed for some text-shadow effects if more complex */
+            color: var(--accent3); 
+            display: inline-block; 
         }
         #home p {
-            font-size: 1.2rem; /* Adjusted for VT323 */
+            font-size: 1.1rem; /* Base P size */
             color: var(--text-primary);
             margin-bottom: 2rem;
-            max-width: 600px;
+            max-width: 90%; /* Ensure text wraps nicely within the box */
             margin-left: auto;
             margin-right: auto;
         }
+
+        /* Larger hero content box and text for medium screens and up */
+        @media (min-width: 768px) { /* md breakpoint */
+            #home .hero-content {
+                padding: 3rem; /* Increased padding */
+                max-width: 800px; /* Increased max-width for desktop */
+            }
+            #home h1 {
+                font-size: 3rem; /* Larger H1 on desktop */
+            }
+            #home p {
+                font-size: 1.4rem; /* Larger P on desktop */
+            }
+        }
+        /* Further increase for large screens */
+        @media (min-width: 1024px) { /* lg breakpoint */
+            #home .hero-content {
+                padding: 4rem;
+                max-width: 900px; /* Even larger for very wide screens */
+            }
+             #home h1 {
+                font-size: 3.5rem; 
+            }
+            #home p {
+                font-size: 1.5rem; 
+            }
+        }
+
 
         /* Navigation Bar */
         nav {
             background-color: var(--bg-main);
             border-bottom: 4px solid var(--border-strong);
-            padding: 0.75rem 1rem; /* Adjusted padding */
+            padding: 0.75rem 1rem; 
         }
-        nav .container { /* Ensure container is used */
-             max-width: 1200px; /* Example max width */
+        nav .container { 
+             max-width: 1200px; 
         }
-        nav a.site-title { /* For "Mahmoud" */
+        nav a.site-title { 
              font-family: var(--font-heading);
              color: var(--accent1) !important;
-             font-size: 1.5rem; /* Larger for title */
+             font-size: 1.5rem; 
              text-shadow: 1px 1px var(--bg-main), 2px 2px var(--accent2);
         }
         .nav-link {
             font-family: var(--font-heading);
-            font-size: 0.9rem; /* Readable pixel font size */
+            font-size: 0.9rem; 
             color: var(--text-primary);
             padding: 8px 12px;
             border: 2px solid transparent;
@@ -156,10 +184,10 @@
         }
         #menu-icon svg {
             stroke: var(--accent1);
-            width: 32px; /* Larger icon */
+            width: 32px; 
             height: 32px;
         }
-        #nav-links.active { /* Mobile menu open state */
+        #nav-links.active { 
             background-color: var(--bg-main);
             border-top: 2px solid var(--border-strong);
             padding: 1rem;
@@ -170,37 +198,37 @@
         .card-common {
             background-color: var(--bg-layer1);
             border: 4px solid var(--border-medium);
-            border-radius: 0; /* Blocky edges */
-            box-shadow: 6px 6px 0px var(--border-strong); /* 8-bit hard shadow */
+            border-radius: 0; 
+            box-shadow: 6px 6px 0px var(--border-strong); 
             transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
-            overflow: hidden; /* Ensure image border is contained */
-            display: flex; /* Flexbox for vertical alignment */
-            flex-direction: column; /* Stack content vertically */
-            height: 100%; /* Make cards in a row equal height */
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100%; 
         }
         .card-common:hover {
             transform: translate(-4px, -4px);
-            box-shadow: 10px 10px 0px var(--accent3); /* Yellow shadow on hover */
+            box-shadow: 10px 10px 0px var(--accent3); 
         }
         .card-common img {
             border-bottom: 4px solid var(--border-medium);
             border-radius: 0;
-            image-rendering: pixelated; /* Crucial for 8-bit image look */
+            image-rendering: pixelated; 
             width: 100%;
-            height: 200px; /* Fixed height for consistency */
-            object-fit: cover; /* Or 'contain' if you prefer */
+            height: 200px; 
+            object-fit: cover; 
         }
         .card-common .card-content {
             padding: 1.5rem;
-            flex-grow: 1; /* Allows content to fill space */
+            flex-grow: 1; 
             display: flex;
             flex-direction: column;
         }
         .card-common .card-content p {
             color: var(--text-secondary);
-            font-size: 20px; /* Maintain body font size */
+            font-size: 20px; 
             margin-bottom: 1rem;
-            flex-grow: 1; /* Pushes the link to the bottom */
+            flex-grow: 1; 
         }
         .card-common a.details-link {
             font-family: var(--font-heading);
@@ -210,7 +238,7 @@
             border: 2px solid var(--accent1);
             padding: 8px 12px;
             display: inline-block;
-            align-self: flex-start; /* Aligns button to the left */
+            align-self: flex-start; 
         }
         .card-common a.details-link:hover {
             background-color: var(--accent1);
@@ -221,16 +249,16 @@
         .btn {
             font-family: var(--font-heading);
             padding: 12px 20px;
-            border-radius: 0; /* Blocky */
+            border-radius: 0; 
             text-transform: uppercase;
             letter-spacing: 1px;
             font-size: 1rem;
             transition: transform 0.15s ease-out, background-color 0.2s, box-shadow 0.15s ease-out, color 0.2s;
-            box-shadow: 4px 4px 0px #000000; /* Black base shadow */
+            box-shadow: 4px 4px 0px #000000; 
             border-style: solid;
             border-width: 3px;
         }
-        .btn-primary-8bit { /* New class for primary button */
+        .btn-primary-8bit { 
             background-color: var(--accent1);
             color: var(--bg-main);
             border-color: var(--accent1);
@@ -242,7 +270,7 @@
             transform: translate(-2px, -2px);
             box-shadow: 6px 6px 0px #000000;
         }
-        .btn-secondary-8bit { /* New class for secondary button */
+        .btn-secondary-8bit { 
             background-color: transparent;
             color: var(--accent2);
             border-color: var(--accent2);
@@ -255,7 +283,7 @@
         }
 
         /* Form Styling */
-        .form-container { /* Wrapper for the form */
+        .form-container { 
             background-color: var(--bg-layer1);
             border: 4px solid var(--border-strong);
             padding: 2rem;
@@ -270,14 +298,14 @@
             font-family: var(--font-body);
             font-size: 20px;
             width: 100%;
-            margin-bottom: 1.5rem; /* Spacing between inputs */
+            margin-bottom: 1.5rem; 
         }
         .form-input:focus {
             outline: none;
-            border-color: var(--accent3); /* Yellow focus border */
+            border-color: var(--accent3); 
             box-shadow: 0 0 0 3px var(--accent3);
         }
-        label.form-label { /* Specific class for form labels */
+        label.form-label { 
             font-family: var(--font-heading);
             font-size: 0.9rem;
             color: var(--accent1);
@@ -295,24 +323,24 @@
             padding-top: 4rem;
             padding-bottom: 4rem;
         }
-        #about, #services, #contact { /* Common section styling */
+        #about, #services, #contact { 
             border-top: 6px solid var(--border-strong);
         }
         #about { background-color: var(--bg-layer1); }
-        #portfolio { background-color: var(--bg-main); } /* Alternating dark */
+        #portfolio { background-color: var(--bg-main); } 
         #services { background-color: var(--bg-layer1); }
-        #contact { background-color: var(--bg-main); } /* Alternating dark */
+        #contact { background-color: var(--bg-main); } 
 
 
         /* Skill Tags */
         .skill-tag {
-            background-color: var(--accent2); /* Magenta background */
-            color: var(--text-primary); /* White text */
+            background-color: var(--accent2); 
+            color: var(--text-primary); 
             padding: 6px 10px;
-            font-family: var(--font-heading); /* Heading font for tags */
+            font-family: var(--font-heading); 
             font-size: 0.7rem; 
-            border: 2px solid var(--text-primary); /* White border */
-            box-shadow: 2px 2px 0px var(--accent1); /* Cyan shadow */
+            border: 2px solid var(--text-primary); 
+            box-shadow: 2px 2px 0px var(--accent1); 
             margin: 4px;
             display: inline-block;
             text-transform: uppercase;
@@ -335,7 +363,7 @@
             text-decoration: underline;
         }
         footer .social-icons svg {
-            width: 28px; /* Slightly larger icons */
+            width: 28px; 
             height: 28px;
             fill: var(--accent1);
             transition: fill 0.2s;
@@ -346,7 +374,7 @@
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 16px; /* Chunky scrollbar */
+            width: 16px; 
         }
         ::-webkit-scrollbar-track {
             background: var(--bg-main);
@@ -361,17 +389,18 @@
         }
 
         /* Responsive Adjustments */
-        @media (max-width: 768px) {
+        @media (max-width: 768px) { /* md breakpoint for existing mobile styles */
             body { font-size: 20px; }
-            #home h1 { font-size: 1.8rem; }
-            #home p { font-size: 1rem; }
+            /* #home h1 { font-size: 1.8rem; } /* Keep hero H1 adjustments separate */
+            /* #home p { font-size: 1rem; } /* Keep hero P adjustments separate */
             .section-title-main { font-size: 1.4rem; margin-bottom: 2rem;}
             .project-card h3 { font-size: 1.1rem; }
             .card-common img { height: 180px; }
             .nav-link { font-size: 0.8rem; padding: 6px 8px;}
             nav a.site-title { font-size: 1.2rem; }
             .btn { font-size: 0.9rem; padding: 10px 16px; }
-            #home .hero-content { padding: 1.5rem; border-width: 3px; box-shadow: 0 0 0 6px var(--accent1), 6px 6px 0 6px var(--bg-main); }
+            /* #home .hero-content { padding: 1.5rem; border-width: 3px; box-shadow: 0 0 0 6px var(--accent1), 6px 6px 0 6px var(--bg-main); } */
+            /* The hero content specific mobile styles are now handled by its base styles and the new @media queries */
         }
 
     </style>
