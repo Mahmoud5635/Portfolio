@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahmoud - Visual Designer & Artist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        /* 8-Bit Retro Theme Variables */
+        :root {
+            --bg-main: #1A1A1A; /* Very dark grey / Off-black */
+            --bg-layer1: #2A2A2A; /* Slightly lighter for cards/sections */
+            --bg-hero-overlay: rgba(26, 26, 26, 0.7); /* Overlay for hero text readability */
+
+            --text-primary: #FFFFFF; /* Pure white */
+            --text-secondary: #AAAAAA; /* Light grey for secondary text */
+            
+            --accent1: #00FFFF; /* Cyan */
+            --accent2: #FF00FF; /* Magenta */
+            --accent3: #FFFF00; /* Yellow */
+            
+            --border-strong: var(--accent1);
+            --border-medium: var(--accent2);
+
+            --font-heading: 'Press Start 2P', cursive;
+            --font-body: 'VT323', monospace;
+
+            /* Parallax background - simple repeating lines for 8-bit feel */
+            --parallax-bg-image: repeating-linear-gradient(
+                45deg,
+                rgba(0, 255, 255, 0.05), /* Faint cyan lines */
+                rgba(0, 255, 255, 0.05) 2px, /* Line thickness */
+                transparent 2px,
+                transparent 10px /* Spacing */
+            );
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-size: 22px; /* VT323 is clearer a bit larger */
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            /* Custom cursor placeholder - replace with your base64 string */
+            cursor: url('data:image/png;base64,YOUR_BASE64_ARROW_CURSOR_HERE'), auto;
+        }
+
+        /* Interactive elements cursor */
+        a, button, .project-card, .nav-link, input[type="submit"], input[type="button"], label {
+            cursor: url('data:image/png;base64,YOUR_BASE64_HAND_CURSOR_HERE'), pointer;
+        }
+        .form-input {
+            cursor: text;
+        }
+
+        h1, h2, h3, h4, h5, h6, .section-title-main { /* Renamed for clarity */
+            font-family: var(--font-heading);
+            color: var(--text-primary); /* White for main headings */
+        }
+        
+        .section-title-main {
+            font-size: 1.8rem; /* Adjusted for pixel font */
+            margin-bottom: 3rem;
+            text-align: center;
+            letter-spacing: 1px;
+            color: var(--accent1);
+            text-shadow: 2px 2px var(--bg-main), 4px 4px var(--accent2); /* 8-bit layered shadow */
+        }
+        .project-card h3 { /* Sub-headings within cards */
+             font-family: var(--font-heading);
+             color: var(--accent3); /* Yellow for card titles */
+             font-size: 1.3rem;
+             text-shadow: 1px 1px var(--bg-layer1), 2px 2px var(--accent1);
+        }
+
+
+        /* Hero Section Styling */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1.5rem;
+            position: relative; /* For parallax pseudo-element */
+            overflow: hidden; /* Contain pseudo-element */
+            border-bottom: 6px solid var(--border-strong);
+            /* Parallax background is applied here for JS control */
+            background-image: var(--parallax-bg-image);
+            background-color: #101010; /* Darker base for parallax */
+            background-attachment: scroll; /* Important for JS parallax */
+            background-size: auto;
+        }
+        #home .hero-content { /* Ensure content is above pseudo-element */
+            position: relative;
+            z-index: 1; /* Keep content above any potential ::before overlay */
+            background-color: var(--bg-hero-overlay); /* Semi-transparent overlay for text */
+            padding: 2rem;
+            border: 4px solid var(--accent2);
+            box-shadow: 0 0 0 8px var(--accent1), 8px 8px 0 8px var(--bg-main);
+        }
+        #home h1 {
+            font-size: 2.5rem; /* Adjusted for pixel font */
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            /* 8-bit style text effect */
+            text-shadow: 
+                3px 3px 0 var(--accent2),  /* Magenta shadow */
+                -3px -3px 0 var(--accent1); /* Cyan highlight/shadow */
+        }
+         #home h1 .name-highlight {
+            color: var(--accent3); /* Yellow for name */
+            display: inline-block; /* Needed for some text-shadow effects if more complex */
+        }
+        #home p {
+            font-size: 1.2rem; /* Adjusted for VT323 */
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: var(--bg-main);
+            border-bottom: 4px solid var(--border-strong);
+            padding: 0.75rem 1rem; /* Adjusted padding */
+        }
+        nav .container { /* Ensure container is used */
+             max-width: 1200px; /* Example max width */
+        }
+        nav a.site-title { /* For "Mahmoud" */
+             font-family: var(--font-heading);
+             color: var(--accent1) !important;
+             font-size: 1.5rem; /* Larger for title */
+             text-shadow: 1px 1px var(--bg-main), 2px 2px var(--accent2);
+        }
+        .nav-link {
+            font-family: var(--font-heading);
+            font-size: 0.9rem; /* Readable pixel font size */
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border: 2px solid transparent;
+            transition: color 0.2s, background-color 0.2s;
+            text-transform: uppercase;
+        }
+        .nav-link:hover, #nav-links a.active-link {
+            color: var(--bg-main);
+            background-color: var(--accent1);
+            border-color: var(--accent1);
+            text-shadow: none;
+        }
+        #menu-icon svg {
+            stroke: var(--accent1);
+            width: 32px; /* Larger icon */
+            height: 32px;
+        }
+        #nav-links.active { /* Mobile menu open state */
+            background-color: var(--bg-main);
+            border-top: 2px solid var(--border-strong);
+            padding: 1rem;
+        }
+
+
+        /* Card Styling (for portfolio, services) */
+        .card-common {
+            background-color: var(--bg-layer1);
+            border: 4px solid var(--border-medium);
+            border-radius: 0; /* Blocky edges */
+            box-shadow: 6px 6px 0px var(--border-strong); /* 8-bit hard shadow */
+            transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+            overflow: hidden; /* Ensure image border is contained */
+            display: flex; /* Flexbox for vertical alignment */
+            flex-direction: column; /* Stack content vertically */
+            height: 100%; /* Make cards in a row equal height */
+        }
+        .card-common:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0px var(--accent3); /* Yellow shadow on hover */
+        }
+        .card-common img {
+            border-bottom: 4px solid var(--border-medium);
+            border-radius: 0;
+            image-rendering: pixelated; /* Crucial for 8-bit image look */
+            width: 100%;
+            height: 200px; /* Fixed height for consistency */
+            object-fit: cover; /* Or 'contain' if you prefer */
+        }
+        .card-common .card-content {
+            padding: 1.5rem;
+            flex-grow: 1; /* Allows content to fill space */
+            display: flex;
+            flex-direction: column;
+        }
+        .card-common .card-content p {
+            color: var(--text-secondary);
+            font-size: 20px; /* Maintain body font size */
+            margin-bottom: 1rem;
+            flex-grow: 1; /* Pushes the link to the bottom */
+        }
+        .card-common a.details-link {
+            font-family: var(--font-heading);
+            color: var(--accent1);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border: 2px solid var(--accent1);
+            padding: 8px 12px;
+            display: inline-block;
+            align-self: flex-start; /* Aligns button to the left */
+        }
+        .card-common a.details-link:hover {
+            background-color: var(--accent1);
+            color: var(--bg-main);
+        }
+
+        /* Buttons */
+        .btn {
+            font-family: var(--font-heading);
+            padding: 12px 20px;
+            border-radius: 0; /* Blocky */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+            transition: transform 0.15s ease-out, background-color 0.2s, box-shadow 0.15s ease-out, color 0.2s;
+            box-shadow: 4px 4px 0px #000000; /* Black base shadow */
+            border-style: solid;
+            border-width: 3px;
+        }
+        .btn-primary-8bit { /* New class for primary button */
+            background-color: var(--accent1);
+            color: var(--bg-main);
+            border-color: var(--accent1);
+        }
+        .btn-primary-8bit:hover {
+            background-color: var(--accent3);
+            color: var(--bg-main);
+            border-color: var(--accent3);
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #000000;
+        }
+        .btn-secondary-8bit { /* New class for secondary button */
+            background-color: transparent;
+            color: var(--accent2);
+            border-color: var(--accent2);
+        }
+        .btn-secondary-8bit:hover {
+            background-color: var(--accent2);
+            color: var(--text-primary);
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #000000;
+        }
+
+        /* Form Styling */
+        .form-container { /* Wrapper for the form */
+            background-color: var(--bg-layer1);
+            border: 4px solid var(--border-strong);
+            padding: 2rem;
+            box-shadow: 6px 6px 0px var(--border-medium);
+        }
+        .form-input {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            border: 3px solid var(--border-medium);
+            border-radius: 0;
+            padding: 12px;
+            font-family: var(--font-body);
+            font-size: 20px;
+            width: 100%;
+            margin-bottom: 1.5rem; /* Spacing between inputs */
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent3); /* Yellow focus border */
+            box-shadow: 0 0 0 3px var(--accent3);
+        }
+        label.form-label { /* Specific class for form labels */
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            color: var(--accent1);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        #form-status p {
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+        }
+
+
+        /* Section specific styling */
+        .section-padded {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+        #about, #services, #contact { /* Common section styling */
+            border-top: 6px solid var(--border-strong);
+        }
+        #about { background-color: var(--bg-layer1); }
+        #portfolio { background-color: var(--bg-main); } /* Alternating dark */
+        #services { background-color: var(--bg-layer1); }
+        #contact { background-color: var(--bg-main); } /* Alternating dark */
+
+
+        /* Skill Tags */
+        .skill-tag {
+            background-color: var(--accent2); /* Magenta background */
+            color: var(--text-primary); /* White text */
+            padding: 6px 10px;
+            font-family: var(--font-heading); /* Heading font for tags */
+            font-size: 0.7rem; 
+            border: 2px solid var(--text-primary); /* White border */
+            box-shadow: 2px 2px 0px var(--accent1); /* Cyan shadow */
+            margin: 4px;
+            display: inline-block;
+            text-transform: uppercase;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-main);
+            border-top: 6px solid var(--border-strong);
+            padding: 2rem 1rem;
+            color: var(--text-secondary);
+        }
+        footer p { font-size: 18px; }
+        footer a {
+            color: var(--accent1);
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: var(--accent3);
+            text-decoration: underline;
+        }
+        footer .social-icons svg {
+            width: 28px; /* Slightly larger icons */
+            height: 28px;
+            fill: var(--accent1);
+            transition: fill 0.2s;
+        }
+        footer .social-icons a:hover svg {
+            fill: var(--accent3);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 16px; /* Chunky scrollbar */
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+            border-left: 3px solid var(--border-strong);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent1);
+            border: 3px solid var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent3);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            body { font-size: 20px; }
+            #home h1 { font-size: 1.8rem; }
+            #home p { font-size: 1rem; }
+            .section-title-main { font-size: 1.4rem; margin-bottom: 2rem;}
+            .project-card h3 { font-size: 1.1rem; }
+            .card-common img { height: 180px; }
+            .nav-link { font-size: 0.8rem; padding: 6px 8px;}
+            nav a.site-title { font-size: 1.2rem; }
+            .btn { font-size: 0.9rem; padding: 10px 16px; }
+            #home .hero-content { padding: 1.5rem; border-width: 3px; box-shadow: 0 0 0 6px var(--accent1), 6px 6px 0 6px var(--bg-main); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav class="sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#home" class="site-title">Mahmoud_</a> <div class="md:hidden">
+                <button id="menu-icon" class="focus:outline-none p-2">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+            <div id="nav-links" class="hidden md:flex md:space-x-1 items-center">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#portfolio" class="nav-link">Portfolio</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home">
+        <div class="hero-content">
+            <h1>Hi, I'm <span class="name-highlight">Mahmoud</span>!!</h1>
+            <p>A Visual Artist &amp; Creative Designer, Crafting Visual Wonders.</p>
+            <a href="#portfolio" class="btn btn-primary-8bit mt-4 mr-2">View My Work_</a>
+            <a href="#contact" class="btn btn-secondary-8bit mt-4">Get In Touch_</a>
+        </div>
+    </header>
+
+    <section id="about" class="section-padded">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title-main">&gt; About Me_</h2>
+            <div class="flex flex-col md:flex-row items-center md:space-x-8">
+                <div class="md:w-1/3 mb-8 md:mb-0">
+                    <img src="https://placehold.co/400x400/2A2A2A/00FFFF?text=PLAYER+1" alt="Mahmoud - Player 1" class="w-full max-w-xs mx-auto object-cover" style="border: 4px solid var(--border-strong); image-rendering: pixelated; box-shadow: 4px 4px 0 var(--border-medium);" onerror="this.onerror=null;this.src='https://placehold.co/400x400/2A2A2A/FFFFFF?text=NO+SIGNAL';">
+                </div>
+                <div class="md:w-2/3">
+                    <p class="mb-4">LOAD PROFILE: [MAHMOUD]...</p>
+                    <p class="mb-4">
+                        A visual artist and creative designer with a passion for crafting memorable experiences. My work blends aesthetic theory with practical design to build compelling brand identities, intuitive digital platforms, and striking illustrations.
+                    </p>
+                    <p class="mb-6">
+                        I thrive on transforming complex ideas into clear, engaging visual narratives. Let's create something wonderful together.
+                    </p>
+                    <h3 class="text-xl mb-3" style="font-family: var(--font-heading); color: var(--accent2);">&gt; Skill_Set:</h3>
+                    <div class="flex flex-wrap">
+                        <span class="skill-tag">Brand Identity</span>
+                        <span class="skill-tag">UI/UX Design</span>
+                        <span class="skill-tag">Web Design</span>
+                        <span class="skill-tag">Illustration</span>
+                        <span class="skill-tag">Print & Layout</span>
+                        <span class="skill-tag">Motion Graphics</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="section-padded">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title-main">&gt; Portfolio_</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card-common">
+                    <img src="https://placehold.co/600x400/1A1A1A/FF00FF?text=BRAND+IDENTITY" alt="Brand Identity Project">
+                    <div class="card-content">
+                        <h3>Modern Branding</h3>
+                        <p>A complete brand identity system for a tech startup, from logo to launch materials.</p>
+                        <a href="#" class="details-link">&gt; Load Data_</a>
+                    </div>
+                </div>
+                <div class="card-common">
+                    <img src="https://placehold.co/600x400/1A1A1A/FFFF00?text=WEB+DESIGN" alt="Web Design Project">
+                    <div class="card-content">
+                        <h3>E-Commerce Site</h3>
+                        <p>An intuitive and visually rich e-commerce website design for a fashion label.</p>
+                        <a href="#" class="details-link">&gt; View Asset_</a>
+                    </div>
+                </div>
+                <div class="card-common">
+                    <img src="https://placehold.co/600x400/1A1A1A/00FFFF?text=ILLUSTRATION" alt="Illustration Project">
+                    <div class="card-content">
+                        <h3>Editorial Illustrations</h3>
+                        <p>A series of conceptual illustrations for a feature article in a digital magazine.</p>
+                        <a href="#" class="details-link">&gt; Access File_</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section-padded">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="section-title-main">&gt; Creative_Services_</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card-common">
+                    <div class="card-content">
+                        <svg class="w-16 h-16 mx-auto mb-4" style="color: var(--accent1);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                        <h3>Brand Identity</h3>
+                        <p>Crafting memorable logos, color palettes, and guidelines that tell your brand's story.</p>
+                    </div>
+                </div>
+                <div class="card-common">
+                     <div class="card-content">
+                        <svg class="w-16 h-16 mx-auto mb-4" style="color: var(--accent2);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="0" ry="0"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                        <h3>Digital Experiences</h3>
+                        <p>Designing intuitive and beautiful UI/UX for websites and mobile applications.</p>
+                    </div>
+                </div>
+                <div class="card-common">
+                    <div class="card-content">
+                        <svg class="w-16 h-16 mx-auto mb-4" style="color: var(--accent3);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
+                        <h3>Visual Art & Graphics</h3>
+                        <p>Custom illustrations, icons, and graphic assets that captivate and communicate.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padded">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title-main">&gt; Contact_Transmission_</h2>
+            <div class="form-container max-w-xl mx-auto">
+                <form id="contactForm">
+                    <div class="mb-6">
+                        <label for="name" class="form-label">CALLSIGN (NAME):</label>
+                        <input type="text" id="name" name="name" required class="form-input" placeholder="ENTER YOUR CALLSIGN_">
+                    </div>
+                    <div class="mb-6">
+                        <label for="email" class="form-label">COMMS_CHANNEL (EMAIL):</label>
+                        <input type="email" id="email" name="email" required class="form-input" placeholder="YOUR_EMAIL@DOMAIN.COM_">
+                    </div>
+                    <div class="mb-6">
+                        <label for="subject" class="form-label">SUBJECT_LINE:</label>
+                        <input type="text" id="subject" name="subject" required class="form-input" placeholder="MESSAGE SUBJECT_">
+                    </div>
+                    <div class="mb-8">
+                        <label for="message" class="form-label">MESSAGE_PACKET:</label>
+                        <textarea id="message" name="message" rows="5" required class="form-input" placeholder="TYPE YOUR MESSAGE HERE..."></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary-8bit py-3 px-8">
+                            SEND_DATA &gt;
+                        </button>
+                    </div>
+                    <div id="form-status" class="mt-6 text-center"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center">
+        <div class="container mx-auto px-6">
+            <p class="mb-4">
+                &copy; <span id="currentYear"></span> MAHMOUD // VISUAL DESIGNER & ARTIST // ALL RIGHTS RESERVED_
+            </p>
+            <div class="social-icons flex justify-center space-x-6">
+                <a href="#" aria-label="Old School Social Platform 1"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+                <a href="#" aria-label="Old School Social Platform 2"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg></a>
+                <a href="#" aria-label="Old School Social Platform 3"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Parallax effect for hero background
+        const hero = document.getElementById('home');
+        if (hero) { 
+            // The parallax background image is now directly on #home via CSS
+            window.addEventListener('scroll', () => {
+                const scrollPosition = window.pageYOffset;
+                // Adjust background Y position for parallax.
+                // The '0.15' factor controls the speed. Lower is slower.
+                hero.style.backgroundPositionY = (scrollPosition * 0.15) + 'px';
+            });
+        }
+
+
+        // Mobile menu toggle
+        const menuIcon = document.getElementById('menu-icon');
+        const navLinks = document.getElementById('nav-links');
+        if (menuIcon && navLinks) { 
+            const originalMenuIconSVG = menuIcon.innerHTML;
+            const closeMenuIconSVG = `<svg viewBox="0 0 24 24" style="stroke: var(--accent2); width: 32px; height: 32px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+
+            menuIcon.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                navLinks.classList.toggle('hidden'); 
+                if (navLinks.classList.contains('active')) {
+                    menuIcon.innerHTML = closeMenuIconSVG;
+                } else {
+                    menuIcon.innerHTML = originalMenuIconSVG;
+                }
+            });
+
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        navLinks.classList.add('hidden');
+                        menuIcon.innerHTML = originalMenuIconSVG;
+                    }
+                });
+            });
+        }
+
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const navElement = document.querySelector('nav');
+                    const headerOffset = navElement ? navElement.offsetHeight : 60; 
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Set current year in footer
+        const currentYearEl = document.getElementById('currentYear');
+        if (currentYearEl) {
+            currentYearEl.textContent = new Date().getFullYear();
+        }
+        
+
+        // Contact Form
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('form-status');
+
+        if(contactForm && formStatus) {
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const nameInput = document.getElementById('name');
+                const emailInput = document.getElementById('email');
+                const subjectInput = document.getElementById('subject');
+                const messageInput = document.getElementById('message');
+
+                formStatus.innerHTML = ''; 
+
+                if (!nameInput.value.trim() || !emailInput.value.trim() || !subjectInput.value.trim() || !messageInput.value.trim()) {
+                    formStatus.innerHTML = '<p style="color: var(--accent3);">ERROR: ALL FIELDS REQUIRED_</p>';
+                    setTimeout(() => { formStatus.innerHTML = ''; }, 4000);
+                    return;
+                }
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(emailInput.value.trim())) {
+                    formStatus.innerHTML = '<p style="color: var(--accent3);">ERROR: INVALID EMAIL FORMAT_</p>';
+                    setTimeout(() => { formStatus.innerHTML = ''; }, 4000);
+                    return;
+                }
+
+                formStatus.innerHTML = '<p style="color: var(--accent1);">SENDING DATA...</p>';
+                setTimeout(() => {
+                    formStatus.innerHTML = '<p style="color: var(--accent1);">TRANSMISSION SUCCESSFUL! (DEMO)</p>';
+                    contactForm.reset();
+                    setTimeout(() => { formStatus.innerHTML = ''; }, 5000);
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
