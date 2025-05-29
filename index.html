@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mahmoud - Visual Designer & Artist</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%231A1A1A'/%3E%3Crect x='3' y='3' width='2' height='10' fill='%2300FFFF'/%3E%3Crect x='5' y='4' width='2' height='2' fill='%2300FFFF'/%3E%3Crect x='7' y='5' width='2' height='2' fill='%2300FFFF'/%3E%3Crect x='9' y='4' width='2' height='2' fill='%2300FFFF'/%3E%3Crect x='11' y='3' width='2' height='10' fill='%2300FFFF'/%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <style>
@@ -112,8 +113,7 @@
             background-color: var(--bg-hero-overlay); 
             padding: 2rem; 
             border: 4px solid var(--accent2);
-            /* box-shadow: 0 0 0 8px var(--accent1), 8px 8px 0 8px var(--bg-main); Original static shadow */
-            animation: pulse-glow 3s infinite alternate ease-in-out; /* Added pulsing glow */
+            animation: pulse-glow 3s infinite alternate ease-in-out; 
             width: 90%; 
             max-width: 650px; 
         }
@@ -126,7 +126,6 @@
                 3px 3px 0 var(--accent2), 
                 -3px -3px 0 var(--accent1); 
         }
-        /* Glitch Effect for Name */
         @keyframes glitch {
             0%, 100% { transform: translate(0,0); opacity: 1; }
             5% { transform: translate(-2px, 1px) skewX(5deg); }
@@ -218,14 +217,14 @@
         }
 
         /* Pixelated Section Divider */
-        .section-pixel-divider { /* Added position relative */
+        .section-pixel-divider { 
             position: relative;
         }
         .section-pixel-divider::before {
             content: '';
             display: block;
-            position: absolute; /* Position it relative to the section */
-            top: 0; /* Align to the top of the section */
+            position: absolute; 
+            top: 0; 
             left: 0;
             height: var(--pixel-border-height);
             width: 100%;
@@ -233,19 +232,18 @@
                 45deg, 
                 var(--pixel-border-color), 
                 var(--pixel-border-color) 4px, 
-                var(--bg-main) 4px, /* Use section bg for gaps for better blending */
+                var(--bg-main) 4px, 
                 var(--bg-main) 8px
             ),
             repeating-linear-gradient(
                 -45deg, 
                 var(--pixel-border-color), 
                 var(--pixel-border-color) 4px,
-                transparent 4px, /* Keep transparent for overlay effect if needed */
+                transparent 4px, 
                 transparent 8px
             );
-            background-size: 8px 8px; /* Adjust for denser pixel effect */
-            /* margin-bottom: calc(4rem - var(--pixel-border-height)); Removed, padding will handle space */
-            z-index: 1; /* Ensure it's above section bg but below content */
+            background-size: 8px 8px; 
+            z-index: 1; 
         }
 
 
@@ -338,7 +336,7 @@
 
         /* Section specific styling */
         .section-padded { 
-            padding-top: calc(4rem + var(--pixel-border-height)); /* Account for pixel border height */
+            padding-top: calc(4rem + var(--pixel-border-height)); 
             padding-bottom: 4rem; 
             position: relative; 
         }
@@ -405,10 +403,10 @@
             .btn { font-size: 0.9rem; padding: 10px 16px; }
             .marquee-text { font-size: 1rem; } 
             .section-pixel-divider::before { 
-                margin-bottom: 0; /* Remove margin, padding-top will handle space */
+                margin-bottom: 0; 
             }
             .section-padded {
-                padding-top: calc(2rem + var(--pixel-border-height)); /* Adjust for smaller section padding on mobile */
+                padding-top: calc(2rem + var(--pixel-border-height)); 
                 padding-bottom: 2rem;
             }
         }
