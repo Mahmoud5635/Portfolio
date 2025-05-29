@@ -23,7 +23,7 @@
             --border-strong: var(--accent1);
             --border-medium: var(--accent2);
 
-            --font-heading: 'Press+Start+2P', cursive;
+            --font-heading: 'Press Start 2P', cursive;
             --font-body: 'VT323', monospace;
 
             /* Parallax background - simple repeating lines for 8-bit feel */
@@ -286,6 +286,7 @@
             border: 4px solid var(--border-strong);
             padding: 2rem; /* Base padding */
             box-shadow: 6px 6px 0px var(--border-medium);
+            width: 100%; /* Ensure form container takes full width of its column */
         }
         @media (min-width: 768px) { /* md breakpoint */
             .form-container {
@@ -388,32 +389,33 @@
         .contact-grid {
             display: flex;
             flex-direction: column; /* Stack on mobile */
-            gap: 2rem; /* Gap between columns on larger screens, or rows on mobile */
+            gap: 2rem; 
         }
         @media (min-width: 1024px) { /* lg breakpoint for two columns */
             .contact-grid {
                 flex-direction: row; /* Side-by-side on large screens */
-                gap: 3rem;
+                gap: 3rem; /* Space between columns */
+                align-items: flex-start; /* Align items to the top */
             }
             .contact-left-col {
-                flex: 1; /* Takes up available space */
-                max-width: 40%; /* Adjust as needed */
+                flex: 1 1 35%; /* Flex grow, shrink, basis. Left col takes ~35% */
             }
             .contact-right-col {
-                flex: 1.5; /* Takes up more space for the form */
+                flex: 1 1 60%; /* Right col takes ~60% */
             }
         }
-        .contact-left-col h2 {
-            font-size: 2rem;
+        .contact-left-col h2 { /* "Let's talk..." heading */
+            font-size: 2rem; /* Original size */
+            line-height: 1.3;
             color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            text-align: left; /* Align left for this specific heading */
+            margin-bottom: 2rem; /* Increased margin for better spacing */
+            text-align: left; 
             text-shadow: 2px 2px var(--bg-main), 3px 3px var(--accent2);
         }
         .contact-info-item {
             display: flex;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem; /* Increased spacing */
             font-size: 18px;
             color: var(--text-secondary);
         }
@@ -487,10 +489,17 @@
         }
 
         /* Responsive Adjustments */
-        @media (max-width: 768px) { 
+        @media (max-width: 1023px) { /* Styles for tablet and mobile */
+             .contact-left-col h2 { 
+                font-size: 1.6rem; 
+                text-align: center; /* Center heading on mobile/tablet */
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) { /* Existing mobile styles, ensure no conflict */
             body { font-size: 20px; }
             .section-title-main { font-size: 1.4rem; margin-bottom: 2rem;}
-            .contact-left-col h2 { font-size: 1.6rem; text-align: center; } /* Center heading on mobile */
             .project-card h3 { font-size: 1.1rem; }
             .card-common img { height: 180px; }
             .nav-link { font-size: 0.8rem; padding: 6px 8px;}
@@ -635,7 +644,8 @@
                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         <span>123 Pixel Avenue, Retro City_</span>
                     </div>
-                    <div class="social-icons flex space-x-4 mt-8"> <a href="#" aria-label="Social Platform 1"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+                    <div class="social-icons flex space-x-4 mt-8"> 
+                        <a href="#" aria-label="Social Platform 1"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
                         <a href="#" aria-label="Social Platform 2"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg></a>
                         <a href="#" aria-label="Social Platform 3"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
                     </div>
@@ -683,7 +693,8 @@
                                 <label for="message" class="form-label">YOUR MESSAGE:</label>
                                 <textarea id="message" name="message" rows="5" required class="form-input" placeholder="TYPE YOUR MESSAGE HERE..."></textarea> 
                             </div>
-                            <div class="text-center md:text-right"> <button type="submit" class="btn btn-primary-8bit py-3 px-8">
+                            <div class="text-center md:text-right">
+                                <button type="submit" class="btn btn-primary-8bit py-3 px-8">
                                     SEND MESSAGE &gt;
                                 </button>
                             </div>
@@ -781,14 +792,13 @@
                 event.preventDefault();
                 const nameInput = document.getElementById('name');
                 const emailInput = document.getElementById('email');
-                // const subjectInput = document.getElementById('subject'); // Subject field removed
                 const messageInput = document.getElementById('message');
                 const interests = Array.from(contactForm.querySelectorAll('input[name="interest"]:checked')).map(cb => cb.value);
 
 
                 formStatus.innerHTML = ''; 
 
-                if (!nameInput.value.trim() || !emailInput.value.trim() || !messageInput.value.trim()) { // Removed subject from validation
+                if (!nameInput.value.trim() || !emailInput.value.trim() || !messageInput.value.trim()) { 
                     formStatus.innerHTML = '<p style="color: var(--accent3);">ERROR: NAME, EMAIL & MESSAGE REQUIRED_</p>';
                     setTimeout(() => { formStatus.innerHTML = ''; }, 4000);
                     return;
@@ -801,11 +811,9 @@
                 }
 
                 formStatus.innerHTML = '<p style="color: var(--accent1);">SENDING DATA...</p>';
-                // Log form data to console for demo
                 console.log({
                     name: nameInput.value.trim(),
                     email: emailInput.value.trim(),
-                    // subject: subjectInput.value.trim(), // Subject field removed
                     message: messageInput.value.trim(),
                     interests: interests
                 });
