@@ -37,7 +37,8 @@
             font-size: 22px; 
             line-height: 1.6;
             scroll-behavior: smooth;
-            cursor: url('images/cursor.png'), auto; 
+            /* Custom cursor for general page using external URL */
+            cursor: url('https://www.themahmoudeffect.com/images/cursor.png'), auto; 
             /* Subtle grid background pattern */
             background-image: 
                 linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
@@ -45,9 +46,9 @@
             background-size: 16px 16px; /* Size of the grid squares */
         }
 
-        /* Interactive elements cursor */
+        /* Interactive elements cursor using external URL */
         a, button, .project-card, .nav-link, input[type="submit"], input[type="button"], label, input[type="checkbox"] + span {
-            cursor: url('images/hand.png'), pointer;
+            cursor: url('https://www.themahmoudeffect.com/images/hand.png'), pointer;
         }
         .form-input, textarea.form-input { 
             cursor: text;
@@ -695,36 +696,26 @@
                 formStatus.innerHTML = '<p style="color: var(--accent1);">SENDING DATA...</p>';
                 
                 const formData = new FormData(contactForm);
-                // You can append additional data if needed, e.g., interests
-                // const interests = Array.from(contactForm.querySelectorAll('input[name="interest[]"]:checked')).map(cb => cb.value);
-                // formData.append("interests_summary", interests.join(", "));
-
-
+                
                 try {
                     const response = await fetch(contactForm.action, {
                         method: contactForm.method,
                         body: formData,
                         headers: {
-                            'Accept': 'application/json' // Important for Formspree to return JSON
+                            'Accept': 'application/json' 
                         }
                     });
 
                     if (response.ok) {
-                        // const responseData = await response.json(); // Formspree might return data
                         formStatus.innerHTML = '<p style="color: var(--accent1);">TRANSMISSION SUCCESSFUL! THANK YOU_</p>';
-                        contactForm.reset(); // Clear the form
+                        contactForm.reset(); 
                     } else {
-                        // Handle server errors or non-OK responses from Formspree
-                        // const errorData = await response.json(); // Formspree might provide error details
-                        // console.error("Formspree error:", errorData);
                         formStatus.innerHTML = '<p style="color: var(--accent3);">ERROR: COULD NOT SEND MESSAGE. TRY AGAIN_</p>';
                     }
                 } catch (error) {
-                    // Handle network errors
                     console.error("Network error:", error);
                     formStatus.innerHTML = '<p style="color: var(--accent3);">ERROR: NETWORK ISSUE. PLEASE CHECK CONNECTION_</p>';
                 } finally {
-                    // Clear status message after a few seconds, regardless of outcome
                     setTimeout(() => { formStatus.innerHTML = ''; }, 5000);
                 }
             });
