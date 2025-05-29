@@ -10,12 +10,14 @@
     <style>
         /* 8-Bit Retro Theme Variables */
         :root {
-            --bg-main: #1A1A1A; /* Very dark grey / Off-black */
-            --bg-layer1: #2A2A2A; /* Slightly lighter for cards/sections */
-            --bg-hero-overlay: rgba(26, 26, 26, 0.7); /* Overlay for hero text readability */
+            --bg-main: #1A1A1A; 
+            --bg-layer1: #2A2A2A; 
+            --bg-hero-overlay: rgba(26, 26, 26, 0.7); 
+            --bg-modal-overlay: rgba(26, 26, 26, 0.85);
+            --bg-modal-content: var(--bg-layer1);
 
-            --text-primary: #FFFFFF; /* Pure white */
-            --text-secondary: #AAAAAA; /* Light grey for secondary text */
+            --text-primary: #FFFFFF; 
+            --text-secondary: #AAAAAA; 
             
             --accent1: #00FFFF; /* Cyan */
             --accent2: #FF00FF; /* Magenta */
@@ -27,16 +29,15 @@
             --font-heading: 'Press Start 2P', cursive;
             --font-body: 'VT323', monospace;
 
-            --pixel-border-color: var(--accent1); /* Color for pixelated borders */
-            --pixel-border-height: 6px; /* Height of pixelated border */
+            --pixel-border-color: var(--accent1); 
+            --pixel-border-height: 6px; 
 
-            /* Parallax background - simple repeating lines for 8-bit feel */
             --parallax-bg-image: repeating-linear-gradient(
                 45deg,
-                rgba(0, 255, 255, 0.12), /* Increased opacity for cyan lines */
-                rgba(0, 255, 255, 0.12) 2px, /* Line thickness */
+                rgba(0, 255, 255, 0.12), 
+                rgba(0, 255, 255, 0.12) 2px, 
                 transparent 2px,
-                transparent 12px /* Slightly increased spacing */
+                transparent 12px 
             );
         }
 
@@ -48,15 +49,13 @@
             line-height: 1.6;
             scroll-behavior: smooth;
             cursor: url('https://www.themahmoudeffect.com/images/cursor.png'), auto; 
-            /* Subtle grid background pattern */
             background-image: 
                 linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 16px 16px; /* Size of the grid squares */
+            background-size: 16px 16px; 
         }
 
-        /* Interactive elements cursor */
-        a, button, .project-card, .nav-link, input[type="submit"], input[type="button"], label, input[type="checkbox"] + span {
+        a, button, .project-card, .nav-link, input[type="submit"], input[type="button"], label, input[type="checkbox"] + span, .modal-close-btn {
             cursor: url('https://www.themahmoudeffect.com/images/hand.png'), pointer;
         }
         .form-input, textarea.form-input { 
@@ -85,186 +84,84 @@
 
         /* Hero Section Styling */
         #home {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 1rem; 
-            position: relative; 
-            overflow: hidden; 
-            background-image: var(--parallax-bg-image), /* Diagonal lines - scroll with JS */
-                linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px), /* Fainter grid for hero */
-                linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px); /* Fainter grid for hero */
-            background-position: 0 0, 0 0, 0 0; /* Parallax starts at 0 0 for JS, grid at 0 0 */
-            background-size: auto, 20px 20px, 20px 20px; /* Grid size */
+            min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            padding: 1rem; position: relative; overflow: hidden; 
+            background-image: var(--parallax-bg-image), 
+                linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px), 
+                linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px); 
+            background-position: 0 0, 0 0, 0 0; 
+            background-size: auto, 20px 20px, 20px 20px; 
             background-color: #101010; 
-            background-attachment: scroll, fixed, fixed; /* Parallax scrolls via JS, grid is fixed */
+            background-attachment: scroll, fixed, fixed; 
         }
-
         @keyframes pulse-glow {
             0%, 100% { box-shadow: 0 0 0 8px var(--accent1), 8px 8px 0 8px var(--bg-main); }
             50% { box-shadow: 0 0 0 12px rgba(0, 255, 255, 0.7), 0 0 0 16px rgba(0, 255, 255, 0.3), 8px 8px 0 8px var(--bg-main); }
         }
-
         #home .hero-content { 
-            position: relative;
-            z-index: 1; 
-            background-color: var(--bg-hero-overlay); 
-            padding: 2rem; 
-            border: 4px solid var(--accent2);
+            position: relative; z-index: 1; background-color: var(--bg-hero-overlay); 
+            padding: 2rem; border: 4px solid var(--accent2);
             animation: pulse-glow 3s infinite alternate ease-in-out; 
-            width: 90%; 
-            max-width: 650px; 
+            width: 90%; max-width: 650px; 
         }
         #home h1 {
-            font-size: 2.2rem; 
-            line-height: 1.2;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-            text-shadow: 
-                3px 3px 0 var(--accent2), 
-                -3px -3px 0 var(--accent1); 
+            font-size: 2.2rem; line-height: 1.2; margin-bottom: 1rem; color: var(--text-primary);
+            text-shadow: 3px 3px 0 var(--accent2), -3px -3px 0 var(--accent1); 
         }
         @keyframes glitch {
-            0%, 100% { transform: translate(0,0); opacity: 1; }
-            5% { transform: translate(-2px, 1px) skewX(5deg); }
-            10% { transform: translate(1px, -1px) skewX(-3deg); }
-            15% { transform: translate(0,0) skewX(0deg); }
-            16% { opacity: 0.8; }
-            17% { transform: translate(-1px, 2px) skewX(3deg); opacity: 1; }
-            30% { transform: translate(0,0) skewX(0deg); }
-            70% { transform: translate(0,0); opacity: 1; } 
-            70.5% { transform: translate(2px, -1px) skewX(-2deg); }
-            71% { transform: translate(-1px, 1px) skewX(1deg); }
+            0%, 100% { transform: translate(0,0); opacity: 1; } 5% { transform: translate(-2px, 1px) skewX(5deg); }
+            10% { transform: translate(1px, -1px) skewX(-3deg); } 15% { transform: translate(0,0) skewX(0deg); }
+            16% { opacity: 0.8; } 17% { transform: translate(-1px, 2px) skewX(3deg); opacity: 1; }
+            30% { transform: translate(0,0) skewX(0deg); } 70% { transform: translate(0,0); opacity: 1; } 
+            70.5% { transform: translate(2px, -1px) skewX(-2deg); } 71% { transform: translate(-1px, 1px) skewX(1deg); }
             71.5% { transform: translate(0,0) skewX(0deg); }
         }
-        #home h1 .name-highlight {
-            color: var(--accent3); 
-            display: inline-block; 
-            animation: glitch 4s infinite steps(2, end) alternate;
-        }
-        #home p {
-            font-size: 1.1rem; 
-            color: var(--text-primary);
-            margin-bottom: 2rem;
-            max-width: 90%; 
-            margin-left: auto;
-            margin-right: auto;
-        }
+        #home h1 .name-highlight { color: var(--accent3); display: inline-block; animation: glitch 4s infinite steps(2, end) alternate;}
+        #home p { font-size: 1.1rem; color: var(--text-primary); margin-bottom: 2rem; max-width: 90%; margin-left: auto; margin-right: auto;}
+        @media (min-width: 768px) { #home .hero-content { padding: 3rem; max-width: 800px; } #home h1 { font-size: 3rem; } #home p { font-size: 1.4rem; } }
+        @media (min-width: 1024px) { #home .hero-content { padding: 4rem; max-width: 900px; } #home h1 { font-size: 3.5rem; } #home p { font-size: 1.5rem; } }
 
-        @media (min-width: 768px) { 
-            #home .hero-content { padding: 3rem; max-width: 800px; }
-            #home h1 { font-size: 3rem; }
-            #home p { font-size: 1.4rem; }
-        }
-        @media (min-width: 1024px) { 
-            #home .hero-content { padding: 4rem; max-width: 900px; }
-            #home h1 { font-size: 3.5rem; }
-            #home p { font-size: 1.5rem; }
-        }
-
-        /* Moving Text Strip (Marquee) Styling */
+        /* Marquee Styling */
         .marquee-container {
-            background-color: var(--accent3); 
-            color: var(--bg-main); 
-            padding: 0.75rem 0; 
-            overflow: hidden; 
-            white-space: nowrap; 
-            border-top: 4px solid var(--bg-main); 
-            border-bottom: 4px solid var(--bg-main); 
-            box-shadow: 0 4px 0 var(--accent1), 0 -4px 0 var(--accent1); 
+            background-color: var(--accent3); color: var(--bg-main); padding: 0.75rem 0; 
+            overflow: hidden; white-space: nowrap; border-top: 4px solid var(--bg-main); 
+            border-bottom: 4px solid var(--bg-main); box-shadow: 0 4px 0 var(--accent1), 0 -4px 0 var(--accent1); 
         }
         .marquee-text {
-            display: inline-block; 
-            font-family: var(--font-heading); 
-            font-size: 1.2rem; 
-            letter-spacing: 1px;
-            padding-left: 100%; 
-            animation: marquee-animation 25s linear infinite; 
+            display: inline-block; font-family: var(--font-heading); font-size: 1.2rem; 
+            letter-spacing: 1px; padding-left: 100%; animation: marquee-animation 25s linear infinite; 
         }
         .marquee-text span { margin-right: 50px; }
-        @keyframes marquee-animation {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); } 
-        }
+        @keyframes marquee-animation { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); }  }
 
         /* Navigation Bar */
-        nav {
-            background-color: var(--bg-main);
-            border-bottom: 4px solid var(--border-strong);
-            padding: 0.75rem 1rem; 
-        }
+        nav { background-color: var(--bg-main); border-bottom: 4px solid var(--border-strong); padding: 0.75rem 1rem; }
         nav .container { max-width: 1200px; }
-        nav a.site-title { 
-             font-family: var(--font-heading);
-             color: var(--accent1) !important;
-             font-size: 1.5rem; 
-             text-shadow: 1px 1px var(--bg-main), 2px 2px var(--accent2);
-        }
-        .nav-link {
-            font-family: var(--font-heading); font-size: 0.9rem; color: var(--text-primary);
-            padding: 8px 12px; border: 2px solid transparent;
-            transition: color 0.2s, background-color 0.2s; text-transform: uppercase;
-        }
-        .nav-link:hover, #nav-links a.active-link {
-            color: var(--bg-main); background-color: var(--accent1);
-            border-color: var(--accent1); text-shadow: none;
-        }
+        nav a.site-title {  font-family: var(--font-heading); color: var(--accent1) !important; font-size: 1.5rem; text-shadow: 1px 1px var(--bg-main), 2px 2px var(--accent2); }
+        .nav-link { font-family: var(--font-heading); font-size: 0.9rem; color: var(--text-primary); padding: 8px 12px; border: 2px solid transparent; transition: color 0.2s, background-color 0.2s; text-transform: uppercase; }
+        .nav-link:hover, #nav-links a.active-link { color: var(--bg-main); background-color: var(--accent1); border-color: var(--accent1); text-shadow: none; }
         #menu-icon svg { stroke: var(--accent1); width: 32px; height: 32px; }
-        #nav-links.active { 
-            background-color: var(--bg-main); border-top: 2px solid var(--border-strong); padding: 1rem;
-        }
+        #nav-links.active { background-color: var(--bg-main); border-top: 2px solid var(--border-strong); padding: 1rem; }
 
         /* Pixelated Section Divider */
-        .section-pixel-divider { 
-            position: relative;
-        }
+        .section-pixel-divider { position: relative; }
         .section-pixel-divider::before {
-            content: '';
-            display: block;
-            position: absolute; 
-            top: 0; 
-            left: 0;
-            height: var(--pixel-border-height);
-            width: 100%;
-            background-image: repeating-linear-gradient(
-                45deg, 
-                var(--pixel-border-color), 
-                var(--pixel-border-color) 4px, 
-                var(--bg-main) 4px, 
-                var(--bg-main) 8px
-            ),
-            repeating-linear-gradient(
-                -45deg, 
-                var(--pixel-border-color), 
-                var(--pixel-border-color) 4px,
-                transparent 4px, 
-                transparent 8px
-            );
-            background-size: 8px 8px; 
-            z-index: 1; 
+            content: ''; display: block; position: absolute; top: 0; left: 0;
+            height: var(--pixel-border-height); width: 100%;
+            background-image: repeating-linear-gradient( 45deg, var(--pixel-border-color), var(--pixel-border-color) 4px, var(--bg-main) 4px, var(--bg-main) 8px ),
+                              repeating-linear-gradient( -45deg, var(--pixel-border-color), var(--pixel-border-color) 4px, transparent 4px, transparent 8px );
+            background-size: 8px 8px; z-index: 1; 
         }
 
-
-        /* Card Styling (for portfolio, services) */
+        /* Card Styling */
         .card-common {
-            background-color: var(--bg-layer1);
-            border: 4px solid var(--border-medium);
-            border-radius: 0; 
+            background-color: var(--bg-layer1); border: 4px solid var(--border-medium); border-radius: 0; 
             box-shadow: 6px 6px 0px var(--border-strong); 
             transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, border-color 0.2s;
             overflow: hidden; display: flex; flex-direction: column; height: 100%; 
         }
-        .card-common:hover {
-            transform: translate(-6px, -6px); 
-            box-shadow: 10px 10px 0px var(--accent3), 0 0 0 4px var(--accent1); 
-            border-color: var(--accent1); 
-        }
-        .card-common img {
-            border-bottom: 4px solid var(--border-medium); border-radius: 0;
-            image-rendering: pixelated; width: 100%; height: 200px; object-fit: cover; 
-        }
+        .card-common:hover { transform: translate(-6px, -6px); box-shadow: 10px 10px 0px var(--accent3), 0 0 0 4px var(--accent1); border-color: var(--accent1); }
+        .card-common img { border-bottom: 4px solid var(--border-medium); border-radius: 0; image-rendering: pixelated; width: 100%; height: 200px; object-fit: cover; }
         .card-common .card-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
         .card-common .card-content p { color: var(--text-secondary); font-size: 20px; margin-bottom: 1rem; flex-grow: 1; }
         .card-common a.details-link {
@@ -281,113 +178,125 @@
             transition: transform 0.15s ease-out, background-color 0.2s, box-shadow 0.15s ease-out, color 0.2s;
             box-shadow: 4px 4px 0px #000000; border-style: solid; border-width: 3px;
         }
-        .btn-primary-8bit { 
-            background-color: var(--accent1); color: var(--bg-main); border-color: var(--accent1);
-        }
-        .btn-primary-8bit:hover {
-            background-color: var(--accent3); color: var(--bg-main); border-color: var(--accent3);
-            transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #000000;
-        }
-        .btn-secondary-8bit { 
-            background-color: transparent; color: var(--accent2); border-color: var(--accent2);
-        }
-        .btn-secondary-8bit:hover {
-            background-color: var(--accent2); color: var(--text-primary);
-            transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #000000;
-        }
+        .btn-primary-8bit { background-color: var(--accent1); color: var(--bg-main); border-color: var(--accent1); }
+        .btn-primary-8bit:hover { background-color: var(--accent3); color: var(--bg-main); border-color: var(--accent3); transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #000000; }
+        .btn-secondary-8bit { background-color: transparent; color: var(--accent2); border-color: var(--accent2); }
+        .btn-secondary-8bit:hover { background-color: var(--accent2); color: var(--text-primary); transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #000000; }
 
         /* Form Styling */
-        .form-container { 
-            background-color: var(--bg-layer1); border: 4px solid var(--border-strong);
-            padding: 2rem; box-shadow: 6px 6px 0px var(--border-medium); width: 100%; 
-        }
+        .form-container { background-color: var(--bg-layer1); border: 4px solid var(--border-strong); padding: 2rem; box-shadow: 6px 6px 0px var(--border-medium); width: 100%; }
         @media (min-width: 768px) { .form-container { padding: 2.5rem; } }
-        .form-input {
-            background-color: var(--bg-main); color: var(--text-primary);
-            border: 3px solid var(--border-medium); border-radius: 0;
-            padding: 12px; font-family: var(--font-body); font-size: 20px; width: 100%;
-        }
+        .form-input { background-color: var(--bg-main); color: var(--text-primary); border: 3px solid var(--border-medium); border-radius: 0; padding: 12px; font-family: var(--font-body); font-size: 20px; width: 100%; }
         .form-input:focus { outline: none; border-color: var(--accent3); box-shadow: 0 0 0 3px var(--accent3); }
-        label.form-label { 
-            font-family: var(--font-heading); font-size: 0.9rem; color: var(--accent1);
-            margin-bottom: 0.5rem; display: block;
-        }
+        label.form-label { font-family: var(--font-heading); font-size: 0.9rem; color: var(--accent1); margin-bottom: 0.5rem; display: block; }
         #form-status p { font-family: var(--font-heading); font-size: 0.9rem; }
-        .interest-label {
-            font-family: var(--font-heading); font-size: 0.9rem; color: var(--accent1);
-            margin-bottom: 0.75rem; display: block;
-        }
+        .interest-label { font-family: var(--font-heading); font-size: 0.9rem; color: var(--accent1); margin-bottom: 0.75rem; display: block; }
         .interest-options { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.5rem; }
-        .interest-options label {
-            display: flex; align-items: center; font-family: var(--font-body); font-size: 18px;
-            color: var(--text-secondary); border: 2px solid var(--border-medium); padding: 8px 12px;
-            transition: background-color 0.2s, border-color 0.2s;
-        }
-        .interest-options input[type="checkbox"] {
-            appearance: none; -webkit-appearance: none; width: 18px; height: 18px;
-            border: 2px solid var(--accent1); margin-right: 8px; position: relative; top: -1px; 
-        }
+        .interest-options label { display: flex; align-items: center; font-family: var(--font-body); font-size: 18px; color: var(--text-secondary); border: 2px solid var(--border-medium); padding: 8px 12px; transition: background-color 0.2s, border-color 0.2s; }
+        .interest-options input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 2px solid var(--accent1); margin-right: 8px; position: relative; top: -1px; }
         .interest-options input[type="checkbox"]:checked { background-color: var(--accent1); border-color: var(--accent1); }
-        .interest-options input[type="checkbox"]:checked::after { 
-            content: 'X'; font-family: var(--font-heading); font-size: 12px; color: var(--bg-main);
-            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-        }
+        .interest-options input[type="checkbox"]:checked::after { content: 'X'; font-family: var(--font-heading); font-size: 12px; color: var(--bg-main); position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
         .interest-options label:hover { border-color: var(--accent3); }
 
         /* Section specific styling */
-        .section-padded { 
-            padding-top: calc(4rem + var(--pixel-border-height)); 
-            padding-bottom: 4rem; 
-            position: relative; 
-        }
-        #about, #services, #contact, #portfolio { 
-            /* border-top is now handled by .section-pixel-divider::before */
-        }
-        /* Contact section specific layout */
+        .section-padded { padding-top: calc(4rem + var(--pixel-border-height)); padding-bottom: 4rem; position: relative; }
         #contact { background-color: var(--bg-main); }
         .contact-grid { display: flex; flex-direction: column; gap: 2rem; }
-        @media (min-width: 1024px) { 
-            .contact-grid { flex-direction: row; gap: 3rem; align-items: flex-start; }
-            .contact-left-col { flex: 1 1 35%; }
-            .contact-right-col { flex: 1 1 60%; }
-        }
-        .contact-left-col h2 { 
-            font-size: 2rem; line-height: 1.3; color: var(--text-primary);
-            margin-bottom: 2rem; text-align: left; 
-            text-shadow: 2px 2px var(--bg-main), 3px 3px var(--accent2);
-        }
-        .contact-info-item {
-            display: flex; align-items: center; margin-bottom: 1.25rem; 
-            font-size: 18px; color: var(--text-secondary);
-        }
+        @media (min-width: 1024px) { .contact-grid { flex-direction: row; gap: 3rem; align-items: flex-start; } .contact-left-col { flex: 1 1 35%; } .contact-right-col { flex: 1 1 60%; } }
+        .contact-left-col h2 { font-size: 2rem; line-height: 1.3; color: var(--text-primary); margin-bottom: 2rem; text-align: left; text-shadow: 2px 2px var(--bg-main), 3px 3px var(--accent2); }
+        .contact-info-item { display: flex; align-items: center; margin-bottom: 1.25rem; font-size: 18px; color: var(--text-secondary); }
         .contact-info-item svg { width: 24px; height: 24px; margin-right: 1rem; fill: var(--accent1); }
-        #about { background-color: var(--bg-layer1); }
-        #portfolio { background-color: var(--bg-main); } 
-        #services { background-color: var(--bg-layer1); }
+        #about { background-color: var(--bg-layer1); } #portfolio { background-color: var(--bg-main); } #services { background-color: var(--bg-layer1); }
 
         /* Skill Tags */
-        .skill-tag {
-            background-color: var(--accent2); color: var(--text-primary); padding: 6px 10px;
-            font-family: var(--font-heading); font-size: 0.7rem; border: 2px solid var(--text-primary); 
-            box-shadow: 2px 2px 0px var(--accent1); margin: 4px; display: inline-block; text-transform: uppercase;
-        }
+        .skill-tag { background-color: var(--accent2); color: var(--text-primary); padding: 6px 10px; font-family: var(--font-heading); font-size: 0.7rem; border: 2px solid var(--text-primary); box-shadow: 2px 2px 0px var(--accent1); margin: 4px; display: inline-block; text-transform: uppercase; }
 
         /* Footer */
-        footer {
-            background-color: var(--bg-main); border-top: 6px solid var(--border-strong);
-            padding: 2rem 1rem; color: var(--text-secondary);
-        }
-        footer p { font-size: 18px; }
-        footer a { color: var(--accent1); text-decoration: none; }
-        footer a:hover { color: var(--accent3); text-decoration: underline; }
-        footer .social-icons svg { width: 28px; height: 28px; fill: var(--accent1); transition: fill 0.2s; }
-        footer .social-icons a:hover svg { fill: var(--accent3); }
+        footer { background-color: var(--bg-main); border-top: 6px solid var(--border-strong); padding: 2rem 1rem; color: var(--text-secondary); }
+        footer p { font-size: 18px; } footer a { color: var(--accent1); text-decoration: none; } footer a:hover { color: var(--accent3); text-decoration: underline; }
+        footer .social-icons svg { width: 28px; height: 28px; fill: var(--accent1); transition: fill 0.2s; } footer .social-icons a:hover svg { fill: var(--accent3); }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 16px; }
-        ::-webkit-scrollbar-track { background: var(--bg-main); border-left: 3px solid var(--border-strong); }
-        ::-webkit-scrollbar-thumb { background: var(--accent1); border: 3px solid var(--bg-main); }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent3); }
+        ::-webkit-scrollbar { width: 16px; } ::-webkit-scrollbar-track { background: var(--bg-main); border-left: 3px solid var(--border-strong); } ::-webkit-scrollbar-thumb { background: var(--accent1); border: 3px solid var(--bg-main); } ::-webkit-scrollbar-thumb:hover { background: var(--accent3); }
+
+        /* Modal Styling */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--bg-modal-overlay);
+            z-index: 1000; /* Above other content */
+            display: flex; /* Changed to flex for centering */
+            align-items: center;
+            justify-content: center;
+            opacity: 0; /* Start fully transparent */
+            visibility: hidden; /* Start hidden for accessibility */
+            transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: var(--bg-modal-content);
+            padding: 2rem;
+            border: 4px solid var(--border-strong);
+            box-shadow: 8px 8px 0px var(--border-medium);
+            width: 90%;
+            max-width: 700px; /* Adjust as needed */
+            max-height: 85vh; /* Max height with scroll */
+            overflow-y: auto;
+            position: relative; /* For close button positioning */
+            transform: scale(0.9); /* Start slightly scaled down */
+            transition: transform 0.3s ease-out;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1); /* Scale to full size when active */
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--accent2);
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            line-height: 1;
+        }
+        .modal-close-btn:hover {
+            color: var(--accent3);
+        }
+        #modal-project-image {
+            width: 100%;
+            max-height: 400px; /* Limit image height */
+            object-fit: contain; /* Show full image, might have letterboxing */
+            margin-bottom: 1.5rem;
+            border: 3px solid var(--border-medium);
+            image-rendering: pixelated; /* Keep retro style */
+        }
+        #modal-project-title {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--accent3);
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px var(--bg-modal-content), 2px 2px var(--accent1);
+        }
+        #modal-project-description {
+            font-family: var(--font-body);
+            font-size: 20px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        #modal-loading-indicator {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--accent1);
+            text-align: center;
+            padding: 2rem;
+        }
+
 
         /* Responsive Adjustments */
         @media (max-width: 1023px) { 
@@ -402,13 +311,11 @@
             nav a.site-title { font-size: 1.2rem; }
             .btn { font-size: 0.9rem; padding: 10px 16px; }
             .marquee-text { font-size: 1rem; } 
-            .section-pixel-divider::before { 
-                margin-bottom: 0; 
-            }
-            .section-padded {
-                padding-top: calc(2rem + var(--pixel-border-height)); 
-                padding-bottom: 2rem;
-            }
+            .section-pixel-divider::before { margin-bottom: 0; }
+            .section-padded { padding-top: calc(2rem + var(--pixel-border-height)); padding-bottom: 2rem;}
+            .modal-content { width: 95%; padding: 1.5rem; max-height: 90vh;}
+            #modal-project-title { font-size: 1.5rem; }
+            #modal-project-description { font-size: 18px; }
         }
 
     </style>
@@ -488,27 +395,27 @@
             <h2 class="section-title-main">&gt; Portfolio_</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="card-common">
-                    <img src="https://placehold.co/600x400/1A1A1A/FF00FF?text=BRAND+IDENTITY" alt="Brand Identity Project">
+                    <img src="https://placehold.co/600x400/1A1A1A/FF00FF?text=PROJECT:ALPHA" alt="Project Alpha">
                     <div class="card-content">
-                        <h3>Modern Branding</h3>
-                        <p>A complete brand identity system for a tech startup, from logo to launch materials.</p>
-                        <a href="#" class="details-link">&gt; Load Data_</a>
+                        <h3>Project: Alpha</h3>
+                        <p>A complete brand identity system for a tech startup, from logo to launch materials. This project aimed to capture a futuristic yet approachable feel.</p>
+                        <a href="#" class="details-link" data-project-id="alpha">&gt; Load Data_</a>
                     </div>
                 </div>
                 <div class="card-common">
-                    <img src="https://placehold.co/600x400/1A1A1A/FFFF00?text=WEB+DESIGN" alt="Web Design Project">
+                    <img src="https://placehold.co/600x400/1A1A1A/FFFF00?text=PROJECT:BETA" alt="Project Beta">
                     <div class="card-content">
                         <h3>E-Commerce Site</h3>
-                        <p>An intuitive and visually rich e-commerce website design for a fashion label.</p>
-                        <a href="#" class="details-link">&gt; View Asset_</a>
+                        <p>An intuitive and visually rich e-commerce website design for a fashion label, focusing on a seamless user experience.</p>
+                        <a href="#" class="details-link" data-project-id="beta">&gt; View Asset_</a>
                     </div>
                 </div>
                 <div class="card-common">
-                    <img src="https://placehold.co/600x400/1A1A1A/00FFFF?text=ILLUSTRATION" alt="Illustration Project">
+                    <img src="https://placehold.co/600x400/1A1A1A/00FFFF?text=PROJECT:GAMMA" alt="Project Gamma">
                     <div class="card-content">
                         <h3>Editorial Illustrations</h3>
-                        <p>A series of conceptual illustrations for a feature article in a digital magazine.</p>
-                        <a href="#" class="details-link">&gt; Access File_</a>
+                        <p>A series of conceptual illustrations for a feature article in a digital magazine, bringing complex topics to life.</p>
+                        <a href="#" class="details-link" data-project-id="gamma">&gt; Access File_</a>
                     </div>
                 </div>
             </div>
@@ -630,12 +537,22 @@
                 &copy; <span id="currentYear"></span> MAHMOUD // VISUAL DESIGNER & ARTIST // ALL RIGHTS RESERVED_
             </p>
             <div class="social-icons flex justify-center space-x-6">
-                <a href="#" aria-label="Old School Social Platform 1"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
-                <a href="#" aria-label="Old School Social Platform 2"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg></a>
-                <a href="#" aria-label="Old School Social Platform 3"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+                <a href="#" aria-label="Social Platform 1"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+                <a href="#" aria-label="Social Platform 2"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg></a>
+                <a href="#" aria-label="Social Platform 3"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
             </div>
         </div>
     </footer>
+
+    <div id="portfolioModal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="modalCloseBtn" class="modal-close-btn" aria-label="Close modal">&times;</button>
+            <div id="modalLoadingIndicator">LOADING DATA_</div>
+            <img id="modal-project-image" src="" alt="Project Image" style="display: none;">
+            <h3 id="modal-project-title" style="display: none;"></h3>
+            <p id="modal-project-description" style="display: none;"></p>
+        </div>
+    </div>
 
     <script>
         // Parallax effect for hero background
@@ -701,19 +618,17 @@
             currentYearEl.textContent = new Date().getFullYear();
         }
         
-        // Contact Form Submission Handling with Fetch for Formspree
+        // Contact Form Submission Handling
         const contactForm = document.getElementById('contactForm');
         const formStatus = document.getElementById('form-status');
-
         if(contactForm && formStatus) {
             contactForm.addEventListener('submit', async function(event) {
-                event.preventDefault(); // Prevent default form submission
-
+                event.preventDefault(); 
                 const nameInput = document.getElementById('name');
                 const emailInput = document.getElementById('email');
                 const messageInput = document.getElementById('message');
                 let isValid = true;
-                formStatus.innerHTML = ''; // Clear previous messages
+                formStatus.innerHTML = ''; 
 
                 if (!nameInput.value.trim() || !emailInput.value.trim() || !messageInput.value.trim()) {
                     formStatus.innerHTML = '<p style="color: var(--accent3);">ERROR: NAME, EMAIL & MESSAGE REQUIRED_</p>';
@@ -725,24 +640,15 @@
                     isValid = false;
                 }
 
-                if (!isValid) {
-                    setTimeout(() => { formStatus.innerHTML = ''; }, 4000);
-                    return; // Stop if client-side validation fails
-                }
+                if (!isValid) { setTimeout(() => { formStatus.innerHTML = ''; }, 4000); return; }
 
                 formStatus.innerHTML = '<p style="color: var(--accent1);">SENDING DATA...</p>';
-                
                 const formData = new FormData(contactForm);
                 
                 try {
                     const response = await fetch(contactForm.action, {
-                        method: contactForm.method,
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json' 
-                        }
+                        method: contactForm.method, body: formData, headers: { 'Accept': 'application/json' }
                     });
-
                     if (response.ok) {
                         formStatus.innerHTML = '<p style="color: var(--accent1);">TRANSMISSION SUCCESSFUL! THANK YOU_</p>';
                         contactForm.reset(); 
@@ -754,6 +660,89 @@
                     formStatus.innerHTML = '<p style="color: var(--accent3);">ERROR: NETWORK ISSUE. PLEASE CHECK CONNECTION_</p>';
                 } finally {
                     setTimeout(() => { formStatus.innerHTML = ''; }, 5000);
+                }
+            });
+        }
+
+        // Portfolio Modal Logic
+        const portfolioProjects = [
+            {
+                id: 'alpha',
+                title: 'PROJECT: ALPHA - ADVANCED BRANDING',
+                imageSrc: 'https://placehold.co/800x600/1A1A1A/FF00FF?text=PROJECT:ALPHA+DETAIL',
+                description: 'This was an in-depth branding project for a cutting-edge tech startup. The goal was to fuse a futuristic vision with a user-friendly appeal. We developed a full identity system including logo variations, a comprehensive style guide, digital assets, and print collateral. The color palette and typography were chosen to reflect innovation and trustworthiness. Key challenges included differentiating the brand in a crowded market and ensuring scalability for future growth. The outcome was a strong, cohesive brand presence that resonated with the target audience and supported the client\'s launch strategy.'
+            },
+            {
+                id: 'beta',
+                title: 'PROJECT: BETA - E-COMMERCE PLATFORM',
+                imageSrc: 'https://placehold.co/800x600/1A1A1A/FFFF00?text=PROJECT:BETA+DETAIL',
+                description: 'Designed and prototyped a visually rich and intuitive e-commerce website for a new indie fashion label. The project focused on creating a seamless user journey from Browse to checkout, with a strong emphasis on mobile-first design. Features included custom product galleries, a streamlined cart experience, and integration with social media platforms. The aesthetic combined modern minimalism with bold retro accents to reflect the brand\'s unique style. User testing was conducted at multiple stages to refine the UI and UX, resulting in a highly engaging and conversion-optimized platform.'
+            },
+            {
+                id: 'gamma',
+                title: 'PROJECT: GAMMA - ILLUSTRATION SERIES',
+                imageSrc: 'https://placehold.co/800x600/1A1A1A/00FFFF?text=PROJECT:GAMMA+DETAIL',
+                description: 'Developed a series of conceptual, 8-bit inspired editorial illustrations for a prominent online tech magazine. The illustrations accompanied a feature article on the future of artificial intelligence and its societal impact. Each piece was meticulously crafted to translate complex ideas into accessible and thought-provoking visuals, utilizing a limited color palette and pixel art techniques to evoke a sense of nostalgia combined with futuristic themes. The series was well-received for its unique style and ability to enhance the narrative of the article.'
+            }
+            // Add more project objects here
+        ];
+
+        const modal = document.getElementById('portfolioModal');
+        const modalImage = document.getElementById('modal-project-image');
+        const modalTitle = document.getElementById('modal-project-title');
+        const modalDescription = document.getElementById('modal-project-description');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const modalLoadingIndicator = document.getElementById('modalLoadingIndicator');
+        const detailLinks = document.querySelectorAll('.details-link');
+
+        function openModal(projectId) {
+            if (!modal || !modalImage || !modalTitle || !modalDescription || !modalLoadingIndicator) return;
+
+            modalImage.style.display = 'none';
+            modalTitle.style.display = 'none';
+            modalDescription.style.display = 'none';
+            modalLoadingIndicator.style.display = 'block';
+            modal.classList.add('active'); // Show modal with loading
+
+            setTimeout(() => { // Simulate data loading
+                const project = portfolioProjects.find(p => p.id === projectId);
+                if (project) {
+                    modalImage.src = project.imageSrc;
+                    modalTitle.textContent = project.title;
+                    modalDescription.textContent = project.description;
+
+                    modalImage.style.display = 'block';
+                    modalTitle.style.display = 'block';
+                    modalDescription.style.display = 'block';
+                    modalLoadingIndicator.style.display = 'none';
+                } else {
+                    modalTitle.textContent = 'Error: Project Not Found_';
+                    modalTitle.style.display = 'block';
+                    modalLoadingIndicator.style.display = 'none';
+                }
+            }, 1000); // 1 second delay for "loading"
+        }
+
+        function closeModal() {
+            if (!modal) return;
+            modal.classList.remove('active');
+        }
+
+        detailLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const projectId = this.dataset.projectId;
+                openModal(projectId);
+            });
+        });
+
+        if (modalCloseBtn) {
+            modalCloseBtn.addEventListener('click', closeModal);
+        }
+        if (modal) {
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) { // Clicked on overlay
+                    closeModal();
                 }
             });
         }
