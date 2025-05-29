@@ -149,6 +149,34 @@
             }
         }
 
+        /* Moving Text Strip (Marquee) Styling */
+        .marquee-container {
+            background-color: var(--accent3); /* Yellow background */
+            color: var(--bg-main); /* Dark text for contrast */
+            padding: 0.75rem 0; /* 12px top/bottom padding */
+            overflow: hidden; /* Hide overflowing text */
+            white-space: nowrap; /* Keep text on a single line */
+            border-top: 4px solid var(--bg-main); /* Dark border */
+            border-bottom: 4px solid var(--bg-main); /* Dark border */
+            box-shadow: 0 4px 0 var(--accent1), 0 -4px 0 var(--accent1); /* Cyan "glow" */
+        }
+        .marquee-text {
+            display: inline-block; /* Allows animation */
+            font-family: var(--font-heading); /* Retro heading font */
+            font-size: 1.2rem; /* Adjust size as needed */
+            letter-spacing: 1px;
+            padding-left: 100%; /* Start text off-screen */
+            animation: marquee-animation 25s linear infinite; /* Adjust duration for speed */
+        }
+        .marquee-text span { /* For spacing between repeated text */
+            margin-right: 50px; /* Adjust for desired gap */
+        }
+
+        @keyframes marquee-animation {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); } /* Move text completely to the left */
+        }
+
 
         /* Navigation Bar */
         nav {
@@ -505,6 +533,7 @@
             .nav-link { font-size: 0.8rem; padding: 6px 8px;}
             nav a.site-title { font-size: 1.2rem; }
             .btn { font-size: 0.9rem; padding: 10px 16px; }
+            .marquee-text { font-size: 1rem; } /* Adjust marquee font on mobile */
         }
 
     </style>
@@ -536,6 +565,19 @@
             <a href="#contact" class="btn btn-secondary-8bit mt-4">Get In Touch_</a>
         </div>
     </header>
+
+    <section class="marquee-container">
+        <div class="marquee-text">
+            <span>AVAILABLE FOR FREELANCE PROJECTS +++</span>
+            <span>LATEST WORK ADDED +++</span>
+            <span>LET'S CREATE SOMETHING AWESOME +++</span>
+            <span>DESIGNING VISUAL WONDERS +++</span>
+            <span>AVAILABLE FOR FREELANCE PROJECTS +++</span> 
+            <span>LATEST WORK ADDED +++</span>
+            <span>LET'S CREATE SOMETHING AWESOME +++</span>
+            <span>DESIGNING VISUAL WONDERS +++</span> 
+        </div>
+    </section>
 
     <section id="about" class="section-padded">
         <div class="container mx-auto px-6">
