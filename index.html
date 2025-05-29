@@ -694,28 +694,27 @@
                 </div>
                 <div class="contact-right-col">
                     <div class="form-container">
-                        <form id="contactForm">
+                        <form id="contactForm" action="https://formspree.io/f/xyzwrqza" method="POST">
                             <div class="mb-6">
                                 <label class="interest-label" for="interests_uxui">I'M INTERESTED IN:</label>
                                 <div class="interest-options">
                                     <label for="interest_uxui">
-                                        <input type="checkbox" id="interest_uxui" name="interest" value="UX/UI Design">
-                                        <span>UX/UI Design</span>
+                                        <input type="checkbox" id="interest_uxui" name="interest[]" value="UX/UI Design"> <span>UX/UI Design</span>
                                     </label>
                                     <label for="interest_web">
-                                        <input type="checkbox" id="interest_web" name="interest" value="Web Design">
+                                        <input type="checkbox" id="interest_web" name="interest[]" value="Web Design">
                                         <span>Web Design</span>
                                     </label>
                                     <label for="interest_system">
-                                        <input type="checkbox" id="interest_system" name="interest" value="Design System">
+                                        <input type="checkbox" id="interest_system" name="interest[]" value="Design System">
                                         <span>Design System</span>
                                     </label>
                                     <label for="interest_graphic">
-                                        <input type="checkbox" id="interest_graphic" name="interest" value="Graphic Design">
+                                        <input type="checkbox" id="interest_graphic" name="interest[]" value="Graphic Design">
                                         <span>Graphic Design</span>
                                     </label>
                                      <label for="interest_other">
-                                        <input type="checkbox" id="interest_other" name="interest" value="Other">
+                                        <input type="checkbox" id="interest_other" name="interest[]" value="Other">
                                         <span>Other</span>
                                     </label>
                                 </div>
@@ -728,13 +727,15 @@
                                 </div>
                                 <div class="w-full md:w-1/2"> 
                                     <label for="email" class="form-label">YOUR EMAIL:</label>
-                                    <input type="email" id="email" name="email" required class="form-input" placeholder="e.g. email@example.com_">
-                                </div>
+                                    <input type="email" id="email" name="_replyto" required class="form-input" placeholder="e.g. email@example.com_"> </div>
                             </div>
                             <div class="mb-6"> 
                                 <label for="message" class="form-label">YOUR MESSAGE:</label>
                                 <textarea id="message" name="message" rows="5" required class="form-input" placeholder="TYPE YOUR MESSAGE HERE..."></textarea> 
                             </div>
+                            <input type="hidden" name="_subject" value="New Portfolio Contact from Mahmoud!">
+
+
                             <div class="text-center md:text-right">
                                 <button type="submit" class="btn btn-primary-8bit py-3 px-8">
                                     SEND MESSAGE &gt;
@@ -825,46 +826,42 @@
             currentYearEl.textContent = new Date().getFullYear();
         }
         
-        // Contact Form
+        // Contact Form Submission Handling (Client-side validation + preparing for Formspree)
         const contactForm = document.getElementById('contactForm');
         const formStatus = document.getElementById('form-status');
 
         if(contactForm && formStatus) {
             contactForm.addEventListener('submit', function(event) {
-                event.preventDefault();
+                // Client-side validation
                 const nameInput = document.getElementById('name');
                 const emailInput = document.getElementById('email');
                 const messageInput = document.getElementById('message');
-                const interests = Array.from(contactForm.querySelectorAll('input[name="interest"]:checked')).map(cb => cb.value);
+                let isValid = true;
+                formStatus.innerHTML = ''; // Clear previous messages
 
-
-                formStatus.innerHTML = ''; 
-
-                if (!nameInput.value.trim() || !emailInput.value.trim() || !messageInput.value.trim()) { 
+                if (!nameInput.value.trim() || !emailInput.value.trim() || !messageInput.value.trim()) {
                     formStatus.innerHTML = '<p style="color: var(--accent3);">ERROR: NAME, EMAIL & MESSAGE REQUIRED_</p>';
-                    setTimeout(() => { formStatus.innerHTML = ''; }, 4000);
-                    return;
+                    isValid = false;
                 }
                 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailPattern.test(emailInput.value.trim())) {
+                if (emailInput.value.trim() && !emailPattern.test(emailInput.value.trim())) {
                     formStatus.innerHTML = '<p style="color: var(--accent3);">ERROR: INVALID EMAIL FORMAT_</p>';
-                    setTimeout(() => { formStatus.innerHTML = ''; }, 4000);
-                    return;
+                    isValid = false;
                 }
 
-                formStatus.innerHTML = '<p style="color: var(--accent1);">SENDING DATA...</p>';
-                console.log({
-                    name: nameInput.value.trim(),
-                    email: emailInput.value.trim(),
-                    message: messageInput.value.trim(),
-                    interests: interests
-                });
-
-                setTimeout(() => {
-                    formStatus.innerHTML = '<p style="color: var(--accent1);">TRANSMISSION SUCCESSFUL! (DEMO)</p>';
-                    contactForm.reset();
-                    setTimeout(() => { formStatus.innerHTML = ''; }, 5000);
-                }, 2000);
+                if (!isValid) {
+                    event.preventDefault(); // Stop submission if validation fails
+                    setTimeout(() => { formStatus.innerHTML = ''; }, 4000);
+                } else {
+                    // If validation passes, Formspree will handle the submission.
+                    formStatus.innerHTML = '<p style="color: var(--accent1);">SENDING DATA...</p>';
+                    // The form will submit to the 'action' URL.
+                    // Formspree will show its own success/thank you message or redirect if configured.
+                    // You might want to clear the formStatus message after a short delay if Formspree doesn't redirect immediately.
+                    // For example, after 3 seconds, clear it to avoid it staying on "SENDING DATA..." if there's no redirect.
+                    // setTimeout(() => { formStatus.innerHTML = ''; }, 3000); 
+                    // However, it's usually better to let Formspree handle the post-submission UI.
+                }
             });
         }
     </script>
