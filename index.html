@@ -43,14 +43,15 @@
             font-size: 22px; /* VT323 is clearer a bit larger */
             line-height: 1.6;
             scroll-behavior: smooth;
-            /* Custom cursor placeholder - replace with your base64 string */
+            /* Custom cursor for general page */
+            cursor: url('images/cursor.png'), auto; 
         }
 
         /* Interactive elements cursor */
         a, button, .project-card, .nav-link, input[type="submit"], input[type="button"], label {
-            cursor: url('data:image/png;base64,YOUR_BASE64_HAND_CURSOR_HERE'), pointer;
+            cursor: url('images/hand.png'), pointer;
         }
-        .form-input {
+        .form-input { /* Text input fields should use the standard text cursor for usability */
             cursor: text;
         }
 
